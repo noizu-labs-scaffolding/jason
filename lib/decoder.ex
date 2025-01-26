@@ -1,4 +1,4 @@
-defmodule Jason.DecodeError do
+defmodule Jason.Uo.DecodeError do
   @type t :: %__MODULE__{position: integer, data: String.t}
 
   defexception [:position, :token, :data]
@@ -22,12 +22,12 @@ defmodule Jason.DecodeError do
   end
 end
 
-defmodule Jason.Decoder do
+defmodule Jason.Uo.Decoder do
   @moduledoc false
 
   import Bitwise
 
-  alias Jason.{DecodeError, Codegen}
+  alias Jason.Uo.{DecodeError, Codegen}
 
   import Codegen, only: [bytecase: 2, bytecase: 3]
   import Record
@@ -73,7 +73,7 @@ defmodule Jason.Decoder do
   defp string_decode_function(%{strings: :reference}), do: &(&1)
 
   defp object_decode_function(%{objects: :maps}), do: &:maps.from_list/1
-  defp object_decode_function(%{objects: :ordered_objects}), do: &Jason.OrderedObject.new(:lists.reverse(&1))
+  defp object_decode_function(%{objects: :ordered_objects}), do: &Jason.Uo.OrderedObject.new(:lists.reverse(&1))
 
   defp float_decode_function(%{floats: :native}) do
     fn string, token, skip ->
@@ -161,10 +161,10 @@ defmodule Jason.Decoder do
   end
 
   if function_exported?(Application, :compile_env, 3) do
-    @integer_digit_limit Application.compile_env(:jason, :decoding_integer_digit_limit, 1024)
+    @integer_digit_limit Application.compile_env(:jason_ui, :decoding_integer_digit_limit, 1024)
   else
     # use apply to avoid warnings in newer Elixir versions
-    @integer_digit_limit apply(Application, :get_env, [:jason, :decoding_integer_digit_limit, 1024])
+    @integer_digit_limit apply(Application, :get_env, [:jason_ui, :decoding_integer_digit_limit, 1024])
   end
 
   defp number(<<byte, rest::bits>>, original, skip, stack, decode, len)

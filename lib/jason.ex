@@ -1,9 +1,9 @@
-defmodule Jason do
+defmodule Jason.Uo do
   @moduledoc """
   A blazing fast JSON parser and generator in pure Elixir.
   """
 
-  alias Jason.{Encode, Decoder, DecodeError, EncodeError, Formatter}
+  alias Jason.Uo.{Encode, Decoder, DecodeError, EncodeError, Formatter}
 
   @type escape :: :json | :unicode_safe | :html_safe | :javascript_safe
   @type maps :: :naive | :strict
@@ -48,7 +48,7 @@ defmodule Jason do
     * `:objects` - controls how objects are decoded. Possible values are:
 
       * `:maps` (default) - objects are decoded as maps
-      * `:ordered_objects` - objects are decoded as `Jason.OrderedObject` structs
+      * `:ordered_objects` - objects are decoded as `Jason.Uo.OrderedObject` structs
 
   ## Decoding keys to atoms
 
@@ -58,11 +58,11 @@ defmodule Jason do
 
   ## Examples
 
-      iex> Jason.decode("{}")
+      iex> Jason.Uo.decode("{}")
       {:ok, %{}}
 
-      iex> Jason.decode("invalid")
-      {:error, %Jason.DecodeError{data: "invalid", position: 0, token: nil}}
+      iex> Jason.Uo.decode("invalid")
+      {:error, %Jason.Uo.DecodeError{data: "invalid", position: 0, token: nil}}
   """
   @spec decode(iodata, [decode_opt]) :: {:ok, term} | {:error, DecodeError.t()}
   def decode(input, opts \\ []) do
@@ -78,11 +78,11 @@ defmodule Jason do
 
   ## Examples
 
-      iex> Jason.decode!("{}")
+      iex> Jason.Uo.decode!("{}")
       %{}
 
-      iex> Jason.decode!("invalid")
-      ** (Jason.DecodeError) unexpected byte at position 0: 0x69 ("i")
+      iex> Jason.Uo.decode!("invalid")
+      ** (Jason.Uo.DecodeError) unexpected byte at position 0: 0x69 ("i")
 
   """
   @spec decode!(iodata, [decode_opt]) :: term | no_return
@@ -96,7 +96,7 @@ defmodule Jason do
   @doc """
   Generates JSON corresponding to `input`.
 
-  The generation is controlled by the `Jason.Encoder` protocol,
+  The generation is controlled by the `Jason.Uo.Encoder` protocol,
   please refer to the module to read more on how to define the protocol
   for custom data types.
 
@@ -122,15 +122,15 @@ defmodule Jason do
     * `:pretty` - controls pretty printing of the output. Possible values are:
 
       * `true` to pretty print with default configuration
-      * a keyword of options as specified by `Jason.Formatter.pretty_print/2`.
+      * a keyword of options as specified by `Jason.Uo.Formatter.pretty_print/2`.
 
   ## Examples
 
-      iex> Jason.encode(%{a: 1})
+      iex> Jason.Uo.encode(%{a: 1})
       {:ok, ~S|{"a":1}|}
 
-      iex> Jason.encode("\\xFF")
-      {:error, %Jason.EncodeError{message: "invalid byte 0xFF in <<255>>"}}
+      iex> Jason.Uo.encode("\\xFF")
+      {:error, %Jason.Uo.EncodeError{message: "invalid byte 0xFF in <<255>>"}}
 
   """
   @spec encode(term, [encode_opt]) ::
@@ -150,11 +150,11 @@ defmodule Jason do
 
   ## Examples
 
-      iex> Jason.encode!(%{a: 1})
+      iex> Jason.Uo.encode!(%{a: 1})
       ~S|{"a":1}|
 
-      iex> Jason.encode!("\\xFF")
-      ** (Jason.EncodeError) invalid byte 0xFF in <<255>>
+      iex> Jason.Uo.encode!("\\xFF")
+      ** (Jason.Uo.EncodeError) invalid byte 0xFF in <<255>>
 
   """
   @spec encode!(term, [encode_opt]) :: String.t() | no_return
@@ -176,12 +176,12 @@ defmodule Jason do
 
   ## Examples
 
-      iex> {:ok, iodata} = Jason.encode_to_iodata(%{a: 1})
+      iex> {:ok, iodata} = Jason.Uo.encode_to_iodata(%{a: 1})
       iex> IO.iodata_to_binary(iodata)
       ~S|{"a":1}|
 
-      iex> Jason.encode_to_iodata("\\xFF")
-      {:error, %Jason.EncodeError{message: "invalid byte 0xFF in <<255>>"}}
+      iex> Jason.Uo.encode_to_iodata("\\xFF")
+      {:error, %Jason.Uo.EncodeError{message: "invalid byte 0xFF in <<255>>"}}
 
   """
   @spec encode_to_iodata(term, [encode_opt]) ::
@@ -198,12 +198,12 @@ defmodule Jason do
 
   ## Examples
 
-      iex> iodata = Jason.encode_to_iodata!(%{a: 1})
+      iex> iodata = Jason.Uo.encode_to_iodata!(%{a: 1})
       iex> IO.iodata_to_binary(iodata)
       ~S|{"a":1}|
 
-      iex> Jason.encode_to_iodata!("\\xFF")
-      ** (Jason.EncodeError) invalid byte 0xFF in <<255>>
+      iex> Jason.Uo.encode_to_iodata!("\\xFF")
+      ** (Jason.Uo.EncodeError) invalid byte 0xFF in <<255>>
 
   """
   @spec encode_to_iodata!(term, [encode_opt]) :: iodata | no_return

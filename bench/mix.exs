@@ -22,7 +22,8 @@ defmodule JasonBench.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jason, "~> 1.0", path: "../", override: true},
+      {:jason_ui, "~> 1.0", path: "../", override: true},
+      {:jason, "~> 1.4"},
       {:jason_native, ">= 0.0.0"},
       {:benchee, "~> 1.0"},
       {:benchee_html, "~> 1.0"},

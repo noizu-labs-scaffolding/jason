@@ -1,7 +1,7 @@
-defmodule Jason.FormatterTest do
+defmodule Jason.Uo.FormatterTest do
   use ExUnit.Case, async: true
-  import Jason.Formatter
-  doctest Jason.Formatter
+  import Jason.Uo.Formatter
+  doctest Jason.Uo.Formatter
 
   @test_cases [
     "empty-list",

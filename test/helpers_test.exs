@@ -1,7 +1,7 @@
-defmodule Jason.HelpersTest do
+defmodule Jason.Uo.HelpersTest do
   use ExUnit.Case, async: true
 
-  alias Jason.{OrderedObject, Helpers, Fragment, EncodeError}
+  alias Jason.Uo.{OrderedObject, Helpers, Fragment, EncodeError}
   import Helpers
 
   doctest Helpers
@@ -17,7 +17,7 @@ defmodule Jason.HelpersTest do
 
     test "produces same output as regular encoding" do
       assert %Fragment{} = helper = json_map(bar: 2, baz: 3, foo: 1)
-      assert Jason.encode!(helper) == Jason.encode!(OrderedObject.new(bar: 2, baz: 3, foo: 1))
+      assert Jason.Uo.encode!(helper) == Jason.Uo.encode!(OrderedObject.new(bar: 2, baz: 3, foo: 1))
     end
 
     test "rejects keys with invalid characters" do
@@ -40,7 +40,7 @@ defmodule Jason.HelpersTest do
       map = %{escape: 1}
       assert %Fragment{} = helper = json_map_take(map, [:escape])
       assert Keyword.keys(binding()) == [:helper, :map]
-      assert Jason.encode!(helper) == Jason.encode!(map)
+      assert Jason.Uo.encode!(helper) == Jason.Uo.encode!(map)
     end
 
     test "fails gracefully" do

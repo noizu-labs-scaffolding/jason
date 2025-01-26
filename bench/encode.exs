@@ -1,4 +1,5 @@
 encode_jobs = %{
+  "Jason.Uo"          => &Jason.Uo.encode_to_iodata!(&1, escape: :elixir_json),
   "Jason"          => &Jason.encode_to_iodata!(&1, escape: :elixir_json),
   "Jason native"   => &Jason.encode_to_iodata!(&1, escape: :native_json),
   # "Jason strict"   => &Jason.encode_to_iodata!(&1, maps: :strict, escape: :elixir_json),

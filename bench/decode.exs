@@ -1,4 +1,5 @@
 decode_jobs = %{
+  "Jason.Uo" => fn {json, _} -> Jason.Uo.decode!(json) end,
   "Jason"  => fn {json, _} -> Jason.decode!(json) end,
   "Poison" => fn {json, _} -> Poison.decode!(json) end,
   "JSX"    => fn {json, _} -> JSX.decode!(json, [:strict]) end,

@@ -1,12 +1,12 @@
-defmodule Jason.Mixfile do
+defmodule Jason.Uo.Mixfile do
   use Mix.Project
 
-  @source_url "https://github.com/michalmuskala/jason"
-  @version "1.5.0-alpha.2"
+  @source_url "https://github.com/noizu-labs-scaffolding/jason"
+  @version "1.4.99"
 
   def project() do
     [
-      app: :jason,
+      app: :jason_uo,
       version: @version,
       elixir: "~> 1.4",
       start_permanent: Mix.env() == :prod,
@@ -31,7 +31,8 @@ defmodule Jason.Mixfile do
       {:decimal, "~> 1.0 or ~> 2.0", optional: true},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:jason_native, ">= 0.0.0", optional: true}
+      {:jason_native, ">= 0.0.0", optional: true},
+      {:jason, "~> 1.4", optional: true},
     ] ++ maybe_stream_data()
   end
 
@@ -57,7 +58,7 @@ defmodule Jason.Mixfile do
 
   defp package() do
     [
-      maintainers: ["Michał Muskała"],
+      maintainers: ["Michał Muskała", "Keith Brings"],
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @source_url}
     ]
@@ -68,7 +69,7 @@ defmodule Jason.Mixfile do
       main: "readme",
       name: "Jason",
       source_ref: "v#{@version}",
-      canonical: "http://hexdocs.pm/jason",
+      canonical: "http://hexdocs.pm/jason_uo",
       source_url: @source_url,
       extras: ["README.md", "CHANGELOG.md", "LICENSE"]
     ]

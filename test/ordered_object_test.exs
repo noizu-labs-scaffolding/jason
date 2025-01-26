@@ -1,7 +1,7 @@
-defmodule Jason.OrderedObjectTest do
+defmodule Jason.Uo.OrderedObjectTest do
   use ExUnit.Case, async: true
 
-  alias Jason.OrderedObject
+  alias Jason.Uo.OrderedObject
 
   test "Access behavior" do
     obj = OrderedObject.new([{:foo, 1}, {"bar", 2}])

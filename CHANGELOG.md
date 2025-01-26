@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.99 (1/26/2025)
+Branch-By-Abstraction Rescoped as Jason.Uo, :jason_uo
+
 ## 1.5.0-alpha.2 (07.07.2023)
 
 * Add limit to decoded integer sizes of 1024 digits. This can be changed

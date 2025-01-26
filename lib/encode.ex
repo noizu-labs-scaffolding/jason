@@ -1,4 +1,4 @@
-defmodule Jason.EncodeError do
+defmodule Jason.Uo.EncodeError do
   defexception [:message]
 
   @type t :: %__MODULE__{message: String.t}
@@ -11,14 +11,14 @@ defmodule Jason.EncodeError do
   end
 end
 
-defmodule Jason.Encode do
+defmodule Jason.Uo.Encode do
   @moduledoc """
   Utilities for encoding elixir values to JSON.
   """
 
   import Bitwise
 
-  alias Jason.{Codegen, EncodeError, Encoder, Fragment, OrderedObject}
+  alias Jason.Uo.{Codegen, EncodeError, Encoder, Fragment, OrderedObject}
 
   @typep escape :: (String.t -> iodata)
   @typep encode_map :: (map, escape, encode_map -> iodata)
@@ -41,7 +41,7 @@ defmodule Jason.Encode do
         {:error, e}
       :error, {:invalid_byte, _, _} = e ->
         {:error, EncodeError.new(e)}
-      :error, %Protocol.UndefinedError{protocol: Jason.Encoder} = e ->
+      :error, %Protocol.UndefinedError{protocol: Jason.Uo.Encoder} = e ->
         {:error, e}
     end
   end
@@ -88,7 +88,7 @@ defmodule Jason.Encode do
   end
 
   @doc """
-  Equivalent to calling the `Jason.Encoder.encode/2` protocol function.
+  Equivalent to calling the `Jason.Uo.Encoder.encode/2` protocol function.
 
   Slightly more efficient for built-in types because of the internal dispatching.
   """

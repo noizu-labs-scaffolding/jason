@@ -1,4 +1,4 @@
-defmodule Jason.Fragment do
+defmodule Jason.Uo.Fragment do
   @moduledoc ~S"""
   Provides a way to inject an already-encoded JSON structure into a
   to-be-encoded structure in optimized fashion.

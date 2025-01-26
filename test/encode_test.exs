@@ -1,7 +1,7 @@
-defmodule Jason.EncoderTest do
+defmodule Jason.Uo.EncoderTest do
   use ExUnit.Case, async: true
 
-  alias Jason.{EncodeError, Encoder}
+  alias Jason.Uo.{EncodeError, Encoder}
 
   defmodule Custom do
     defstruct [
@@ -9,12 +9,12 @@ defmodule Jason.EncoderTest do
       bar: nil
     ]
 
-    defimpl Jason.Encoder do
+    defimpl Jason.Uo.Encoder do
       def encode(s, {_,_,user_opts} = opts) do
         unless user_opts[:compact] do
-          %{foo: s.foo, bar: s.bar} |> Jason.Encode.map(opts)
+          %{foo: s.foo, bar: s.bar} |> Jason.Uo.Encode.map(opts)
         else
-          %{foo: s.foo} |> Jason.Encode.map(opts)
+          %{foo: s.foo} |> Jason.Uo.Encode.map(opts)
         end
       end
     end
@@ -22,11 +22,11 @@ defmodule Jason.EncoderTest do
 
   test "user opts" do
     sut = %Custom{foo: "abba", bar: "bobba"}
-    s = Jason.encode!(sut)
+    s = Jason.Uo.encode!(sut)
     assert s == "{\"foo\":\"abba\",\"bar\":\"bobba\"}"
-    s = Jason.encode!(sut, user: [compact: true])
+    s = Jason.Uo.encode!(sut, user: [compact: true])
     assert s == "{\"foo\":\"abba\"}"
-    s = Jason.encode!(%{entity: sut}, user: [compact: true])
+    s = Jason.Uo.encode!(%{entity: sut}, user: [compact: true])
     assert s == "{\"entity\":{\"foo\":\"abba\"}}"
   end
 
@@ -126,7 +126,7 @@ defmodule Jason.EncoderTest do
   end
 
   test "OrderedObject" do
-    import Jason.OrderedObject, only: [new: 1]
+    import Jason.Uo.OrderedObject, only: [new: 1]
 
     assert to_json(new([])) == "{}"
     assert to_json(new([{"foo", "bar"}]))  == ~s({"foo":"bar"})
@@ -143,8 +143,8 @@ defmodule Jason.EncoderTest do
   end
 
   test "Fragment" do
-    pre_encoded_json = Jason.encode!(%{hello: "world", test: 123})
-    assert to_json(%{foo: Jason.Fragment.new(pre_encoded_json)}) == ~s({"foo":#{pre_encoded_json}})
+    pre_encoded_json = Jason.Uo.encode!(%{hello: "world", test: 123})
+    assert to_json(%{foo: Jason.Uo.Fragment.new(pre_encoded_json)}) == ~s({"foo":#{pre_encoded_json}})
   end
 
   defmodule Derived do
@@ -173,8 +173,8 @@ defmodule Jason.EncoderTest do
 
   test "@derive" do
     derived = %Derived{name: "derived"}
-    assert Encoder.impl_for!(derived) == Encoder.Jason.EncoderTest.Derived
-    assert Jason.decode!(to_json(derived)) == %{"name" => "derived"}
+    assert Encoder.impl_for!(derived) == Encoder.Jason.Uo.EncoderTest.Derived
+    assert Jason.Uo.decode!(to_json(derived)) == %{"name" => "derived"}
 
     non_derived = %NonDerived{name: "non-derived"}
     assert_raise Protocol.UndefinedError, fn ->
@@ -197,7 +197,7 @@ defmodule Jason.EncoderTest do
     assert_raise ArgumentError, message, fn ->
       Code.eval_string("""
       defmodule InvalidExceptField do
-        @derive {Jason.Encoder, except: [:invalid]}
+        @derive {Jason.Uo.Encoder, except: [:invalid]}
         defstruct name: ""
       end
       """)
@@ -210,7 +210,7 @@ defmodule Jason.EncoderTest do
     assert_raise ArgumentError, message, fn ->
       Code.eval_string("""
       defmodule InvalidOnlyField do
-        @derive {Jason.Encoder, only: [:invalid]}
+        @derive {Jason.Uo.Encoder, only: [:invalid]}
         defstruct name: ""
       end
       """)
@@ -221,12 +221,12 @@ defmodule Jason.EncoderTest do
     defstruct [:baz, :foo, :quux]
   end
 
-  defimpl Jason.Encoder, for: [KeywordTester] do
+  defimpl Jason.Uo.Encoder, for: [KeywordTester] do
     def encode(struct, opts) do
       struct
       |> Map.from_struct
       |> Enum.sort_by(&elem(&1, 0))
-      |> Jason.Encode.keyword(opts)
+      |> Jason.Uo.Encode.keyword(opts)
     end
   end
 
@@ -258,27 +258,27 @@ defmodule Jason.EncoderTest do
   end
 
   test "encode should not raise on Protocol.UndefinedError" do
-    assert {:error, %Protocol.UndefinedError{}} = Jason.encode(self())
+    assert {:error, %Protocol.UndefinedError{}} = Jason.Uo.encode(self())
   end
 
   test "pretty: true" do
-    object = Jason.OrderedObject.new(a: 3.14159, b: 1)
+    object = Jason.Uo.OrderedObject.new(a: 3.14159, b: 1)
     assert to_json(object, pretty: true) == ~s|{\n  "a": 3.14159,\n  "b": 1\n}|
   end
 
   test "pretty: false" do
-    object = Jason.OrderedObject.new(a: 3.14159, b: 1)
+    object = Jason.Uo.OrderedObject.new(a: 3.14159, b: 1)
     assert to_json(object, pretty: false) == ~s|{"a":3.14159,"b":1}|
   end
 
   defp to_json(value) do
-    native = Jason.encode!(value, escape: :native_json)
-    elixir = Jason.encode!(value, escape: :elixir_json)
+    native = Jason.Uo.encode!(value, escape: :native_json)
+    elixir = Jason.Uo.encode!(value, escape: :elixir_json)
     assert native == elixir
     native
   end
 
   defp to_json(value, opts) do
-    Jason.encode!(value, opts)
+    Jason.Uo.encode!(value, opts)
   end
 end
