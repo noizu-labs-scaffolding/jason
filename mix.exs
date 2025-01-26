@@ -1,12 +1,12 @@
 defmodule Jason.Mixfile do
   use Mix.Project
 
-  @source_url "https://github.com/michalmuskala/jason"
-  @version "1.5.0-alpha.2"
+  @source_url "https://github.com/noizu-labs-scaffolding/jason"
+  @version "1.4.98"
 
   def project() do
     [
-      app: :jason,
+      app: :jason_uo,
       version: @version,
       elixir: "~> 1.4",
       start_permanent: Mix.env() == :prod,
@@ -57,7 +57,7 @@ defmodule Jason.Mixfile do
 
   defp package() do
     [
-      maintainers: ["Michał Muskała"],
+      maintainers: ["Michał Muskała", "Keith Brings"],
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @source_url}
     ]
