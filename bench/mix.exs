@@ -3,7 +3,7 @@ defmodule JasonBench.MixProject do
 
   def project do
     [
-      app: :jason_uo_bench,
+      app: :jason_bench,
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
@@ -22,7 +22,7 @@ defmodule JasonBench.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jason_uo, "~> 1.0", path: "../", override: true},
+      {:jason, "~> 1.0", path: "../", override: true},
       {:jason_native, ">= 0.0.0"},
       {:benchee, "~> 1.0"},
       {:benchee_html, "~> 1.0"},

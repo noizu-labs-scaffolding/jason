@@ -161,10 +161,10 @@ defmodule Jason.Decoder do
   end
 
   if function_exported?(Application, :compile_env, 3) do
-    @integer_digit_limit Application.compile_env(:jason_uo, :decoding_integer_digit_limit, 1024)
+    @integer_digit_limit Application.compile_env(:jason, :decoding_integer_digit_limit, 1024)
   else
     # use apply to avoid warnings in newer Elixir versions
-    @integer_digit_limit apply(Application, :get_env, [:jason_uo, :decoding_integer_digit_limit, 1024])
+    @integer_digit_limit apply(Application, :get_env, [:jason, :decoding_integer_digit_limit, 1024])
   end
 
   defp number(<<byte, rest::bits>>, original, skip, stack, decode, len)

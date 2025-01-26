@@ -6,7 +6,7 @@ defmodule Jason.Mixfile do
 
   def project() do
     [
-      app: :jason_uo,
+      app: :jason,
       version: @version,
       elixir: "~> 1.4",
       start_permanent: Mix.env() == :prod,
